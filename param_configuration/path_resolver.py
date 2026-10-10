@@ -33,9 +33,9 @@ class PathResolver:
         platform_id = os.getenv("PLATFORM_ID", "default_class")
         event_id = os.getenv("EVENT_ID", "default_event")
 
-        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id, vehicle_id, event_id]))
-        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id, vehicle_id]))
-        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id]))
+        self.add_layer(layer=RosParamPackageLayer(subdir=[vehicle_id, platform_id, event_id]))
+        self.add_layer(layer=RosParamPackageLayer(subdir=[vehicle_id, platform_id]))
+        self.add_layer(layer=RosParamPackageLayer(subdir=[vehicle_id]))
         self.add_layer(layer=RosParamPackageLayer())
 
     def resolve_path(
