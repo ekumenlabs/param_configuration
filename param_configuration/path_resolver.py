@@ -29,10 +29,13 @@ class PathResolver:
     def __init__(self):
         self._layers: list[ConfigLayer] = []
 
-        # Add the default config layers, order matters!
-        if os.getenv("PARAM_CONFIG_DIR"):  # Add model and device layers only if ENV variable exists
-            self.add_layer(layer=FileLocationLayer(layer_folder=os.getenv("PARAM_DEVICE_DIR", "device")))
-            self.add_layer(layer=FileLocationLayer(layer_folder="model"))
+        vehicle_id = os.getenv("VEHICLE_ID", "default_id")
+        platform_id = os.getenv("PLATFORM_ID", "default_class")
+        event_id = os.getenv("EVENT_ID", "default_event")
+
+        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id, vehicle_id, event_id]))
+        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id, vehicle_id]))
+        self.add_layer(layer=RosParamPackageLayer(subdir=[platform_id]))
         self.add_layer(layer=RosParamPackageLayer())
 
     def resolve_path(
